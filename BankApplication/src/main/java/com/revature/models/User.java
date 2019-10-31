@@ -129,7 +129,8 @@ public class User implements Serializable {
 				+ ", class_type=" + class_type + ", active=" + active + ", role_type=" + role_type + "]";
 	}
 	public int getAdventurer_id() {
-		// TODO Auto-generated method stub
+		
+
 		return 0;
 	}
 

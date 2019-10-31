@@ -1,9 +1,12 @@
 package com.revature.prompts;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.revature.daos.CurrencyTableDao;
 import com.revature.daos.UserDao;
+import com.revature.models.CurrencyTable;
 import com.revature.util.AuthUtil;
 
 public class DeleteAccountPrompt implements Prompt {
@@ -13,9 +16,14 @@ public class DeleteAccountPrompt implements Prompt {
 
 	@Override
 	public Prompt run() {
+		
+		List<CurrencyTable> currentTable = new ArrayList<CurrencyTable>();
+		
 		System.out.println("Select by Account ID which account you wish to delete.");
-		System.out.println(CurrencyTableDao.currentImplementation.delete(AuthUtil.getCurrentUser().getAdventurer_id()));
+		currentTable=(CurrencyTableDao.currentImplementation.findByAdventurer(AuthUtil.getCurrentUser().getId()));
+		System.out.println(currentTable);
 		int accountId=scan.nextInt();
+		scan.nextLine();
 		
 		int ps = currencyTableDao.delete(accountId);
 		
@@ -23,8 +31,8 @@ public class DeleteAccountPrompt implements Prompt {
 		if(ps == 0) {
 			System.out.println("Account was not deleted.");
 			System.out.println("Please check the Account ID and select the account you wish to delete.");
-			System.out.println(CurrencyTableDao.currentImplementation.delete(AuthUtil.getCurrentUser().getAdventurer_id()));
-		}else {
+			System.out.println(currentTable);
+		}else{
 			System.out.println("Account was succesfully deleted.");
 			System.out.println("Press 1 if you wish to delete another account");
 			System.out.println("Press 2 if you wish to return to the Main Menu");

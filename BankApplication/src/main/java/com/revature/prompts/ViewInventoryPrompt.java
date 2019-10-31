@@ -8,6 +8,7 @@ import com.revature.daos.ItemTableDao;
 import com.revature.daos.UserDao;
 import com.revature.models.CurrencyTable;
 import com.revature.models.ItemTable;
+import com.revature.models.TransactionTable;
 import com.revature.util.AuthUtil;
 
 public class ViewInventoryPrompt implements Prompt{
@@ -26,7 +27,10 @@ public class ViewInventoryPrompt implements Prompt{
 		List<CurrencyTable> printCurrency = new ArrayList<CurrencyTable>();
 		printCurrency = currencyTableDao.findByAdventurer(AuthUtil.getCurrentUser().getId());
 	
-		System.out.println(printCurrency);
+		for(CurrencyTable s:printCurrency) {
+			System.out.println(s);
+		}
+		
 		// get items from item dao and output to user
 		List<ItemTable> printItem = new ArrayList<ItemTable>();
 		printItem = itemTableDao.findByAdventurer(AuthUtil.getCurrentUser().getId());

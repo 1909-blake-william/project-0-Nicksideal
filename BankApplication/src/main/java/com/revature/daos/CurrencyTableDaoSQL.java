@@ -34,27 +34,30 @@ public class CurrencyTableDaoSQL implements CurrencyTableDao {
 			PreparedStatement ps = c.prepareStatement(sql);
 			ps.setInt(1,account_id);
 
-			return ps.executeUpdate();
-
+			ps.executeUpdate();
+			if(ps.equals(0) ) {
+				 
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return 0;
 		}
+		return account_id;
 	}
 	
 	@Override
 	public int save(int gold, int silver, int copper) {
 		try (Connection c = ConnectionUtil.getConnection()) {
 
-			String sql = "INSERT INTO currency (account_id, gold, silver, copper, adventurer)" + 
+			String sql = "INSERT INTO currency (account_id, gold, silver, copper, adventurer) " + 
 			"VALUES (account_id_seq.nextval, ?, ?, ?, ?";
 
 			PreparedStatement ps = c.prepareStatement(sql);
-			ps.setInt(1,gold);
-			ps.setInt(2,silver);
-			ps.setInt(3,copper);
-			ps.setInt(4,AuthUtil.getCurrentUser().getId());
+			ps.setInt(1, gold);
+			ps.setInt(2, silver);
+			ps.setInt(3, copper);
+			ps.setInt(4, AuthUtil.getCurrentUser().getId());
 
 			ps.executeUpdate();
 			
@@ -84,7 +87,7 @@ public class CurrencyTableDaoSQL implements CurrencyTableDao {
 						rs.getInt("copper"), rs.getInt("adventurer"));
 				currency.add(it);
 			}
-
+			
 			return currency;
 
 		} catch (SQLException e) {

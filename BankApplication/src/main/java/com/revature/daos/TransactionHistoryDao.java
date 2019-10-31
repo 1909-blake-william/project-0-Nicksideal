@@ -12,7 +12,7 @@ public interface TransactionHistoryDao {
 	
 	List<TransactionTable> findAll();
 	
-	TransactionTable findByAdventurer();
+	List<TransactionTable> findByAdventurer(int id);
 	
 	int addTransactionItem(String item, String memo);
 

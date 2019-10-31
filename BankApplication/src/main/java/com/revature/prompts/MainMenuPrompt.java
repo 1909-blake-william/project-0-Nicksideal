@@ -32,7 +32,7 @@ public class MainMenuPrompt implements Prompt{
 			case "2":
 				return new SeeAllInventoryPrompt();
 			case "3": 
-				return new TransactionHistoryPrompt();
+				return new AllTransactionHistoryPrompt();
 			case "4":
 				return new LogOutPrompt();
 			default: System.out.println("wrong input");
@@ -40,7 +40,8 @@ public class MainMenuPrompt implements Prompt{
 			}
 			
 		}else {	
-			System.out.println("Welcome " + AuthUtil.getCurrentUser() + "what would you like to do today?");
+			System.out.println("Welcome " + AuthUtil.getCurrentUser());
+			System.out.println("What would you like to do today?");
 			System.out.println("Enter 1 to view your inventory");
 			System.out.println("Enter 2 to make changes in your inventory");
 			System.out.println("Enter 3 to see your adventurer profile");

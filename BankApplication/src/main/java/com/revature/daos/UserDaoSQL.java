@@ -9,11 +9,12 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import com.revature.models.User;
+import com.revature.util.AuthUtil;
 import com.revature.util.ConnectionUtil;
 
 public class UserDaoSQL implements UserDao {
 
-	//private Logger log = Logger.getRootLogger();
+	// private Logger log = Logger.getRootLogger();
 
 	User extractUser(ResultSet rs) throws SQLException {
 		int id = rs.getInt("adventurer_id");
@@ -28,11 +29,9 @@ public class UserDaoSQL implements UserDao {
 
 	@Override
 	public int save(User u) {
-		//log.debug("attempting to find user by credentials from DB");
+		// log.debug("attempting to find user by credentials from DB");
 		try (Connection c = ConnectionUtil.getConnection()) {
-//c.getAutoCommit() 
-//c.commit()
-			String sql = "INSERT INTO adventurer_users (user_id, username, password, race, class_type) "
+			String sql = "INSERT INTO adventurer_user (adventurer_id, username, password, race, class_type) "
 					+ " VALUES (adventurer_users_id_seq.nextval ,?,?,?,?) ";
 
 			PreparedStatement ps = c.prepareStatement(sql);
@@ -40,21 +39,18 @@ public class UserDaoSQL implements UserDao {
 			ps.setString(2, u.getPassword());
 			ps.setString(3, u.getRace());
 			ps.setString(4, u.getClass_type());
-			
-			
-			return ps.executeUpdate();
+
+			ps.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-//			e.printStackTrace();
+			e.printStackTrace();
 			return 0;
 		}
+		return 0;
 	}
-
-	
 
 	@Override
 	public List<User> findAll() {
-		//log.debug("attempting to find all users from DB");
+		// log.debug("attempting to find all users from DB");
 		try (Connection c = ConnectionUtil.getConnection()) {
 
 			String sql = "SELECT * FROM adventurer_user";
@@ -71,42 +67,59 @@ public class UserDaoSQL implements UserDao {
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-		e.printStackTrace();
+			e.printStackTrace();
 			return null;
 		}
 	}
 
 	@Override
-	public User findById() {
-		// TODO Auto-generated method stub
-		return null;
+	public void findById(int i) {
+		try (Connection c = ConnectionUtil.getConnection()) {
+
+			String sql = "Select * FROM adventurer_user " + "WHERE adventuere_id = ? ";
+
+			PreparedStatement ps = c.prepareStatement(sql);
+			ps.setInt(1, i);
+
+			ResultSet rs = ps.executeQuery();
+			User currentAdventurer = new User(rs.getInt("adventurer_id"), rs.getString("username"), "password",
+					rs.getString("race"), rs.getString("class_type"), rs.getString("active"),
+					rs.getString("role_type"));
+			System.out.println(currentAdventurer); 
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return;
+		}
+		
+		
 	}
 
 	@Override
 	public User findByUsernameAndPassword(String username, String password) {
-		//log.debug("attempting to find user credentials from DB");
-		try (Connection c= ConnectionUtil.getConnection()){
-			
+		// log.debug("attempting to find user credentials from DB");
+		try (Connection c = ConnectionUtil.getConnection()) {
+
 			String sql = "Select * FROM adventurer_user " + "WHERE username = ? AND password = ?";
-			
+
 			PreparedStatement ps = c.prepareStatement(sql);
 			ps.setString(1, username);
 			ps.setString(2, password);
 
 			ResultSet rs = ps.executeQuery();
-			
+
 			if (rs.next()) {
 				return extractUser(rs);
 			} else {
 				return null;
 			}
-			} catch (SQLException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-       		e.printStackTrace();
-       		System.out.println(e);
+			e.printStackTrace();
+			System.out.println(e);
 			return null;
 		}
-		
+
 	}
 
 	@Override
@@ -114,13 +127,12 @@ public class UserDaoSQL implements UserDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	@Override
 	public String findByRole() {
-		
-			return null;
-		}
-	
+
+		return null;
+	}
 
 	@Override
 	public User findByActive(String active) {

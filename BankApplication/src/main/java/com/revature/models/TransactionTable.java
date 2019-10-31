@@ -3,7 +3,7 @@ package com.revature.models;
 public class TransactionTable {
 	private int transaction_id;
 	private String type;
-	private int quantity_amount;
+	private String quantity_amount;
 	private String item_name;
 	private String memo;
 	private int adventurer;
@@ -11,7 +11,7 @@ public class TransactionTable {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public TransactionTable(int transaction_id, String type, int quantity_amount, String item_name, String memo,
+	public TransactionTable(int transaction_id, String type, String quantity_amount, String item_name, String memo,
 			int adventurer) {
 		super();
 		this.transaction_id = transaction_id;
@@ -28,7 +28,7 @@ public class TransactionTable {
 		result = prime * result + adventurer;
 		result = prime * result + ((item_name == null) ? 0 : item_name.hashCode());
 		result = prime * result + ((memo == null) ? 0 : memo.hashCode());
-		result = prime * result + quantity_amount;
+		result = prime * result + ((quantity_amount == null) ? 0 : quantity_amount.hashCode());
 		result = prime * result + transaction_id;
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
@@ -54,7 +54,10 @@ public class TransactionTable {
 				return false;
 		} else if (!memo.equals(other.memo))
 			return false;
-		if (quantity_amount != other.quantity_amount)
+		if (quantity_amount == null) {
+			if (other.quantity_amount != null)
+				return false;
+		} else if (!quantity_amount.equals(other.quantity_amount))
 			return false;
 		if (transaction_id != other.transaction_id)
 			return false;
@@ -77,10 +80,10 @@ public class TransactionTable {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public int getQuantity_amount() {
+	public String getQuantity_amount() {
 		return quantity_amount;
 	}
-	public void setQuantity_amount(int quantity_amount) {
+	public void setQuantity_amount(String quantity_amount) {
 		this.quantity_amount = quantity_amount;
 	}
 	public String getItem_name() {
@@ -106,7 +109,5 @@ public class TransactionTable {
 		return "TransactionTable [transaction_id=" + transaction_id + ", type=" + type + ", quantity_amount="
 				+ quantity_amount + ", item_name=" + item_name + ", memo=" + memo + ", adventurer=" + adventurer + "]";
 	}
-	
-	
 
 }

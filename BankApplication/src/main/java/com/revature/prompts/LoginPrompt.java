@@ -48,7 +48,12 @@ public class LoginPrompt implements Prompt {
 				}
 				System.out.println("Enter a new password");
 				String password = scan.nextLine();
-				User newUser = new User(1, username, password, "Adventurer", password, password, password);//fix new user format
+				System.out.println("Enter a race");
+				String race = scan.nextLine();
+				System.out.println("Enter a class");
+				String class_type = scan.nextLine();
+				
+				User newUser = new User(1, username, password, race, class_type, "active", "adventurer");//fix new user format
 				userDao.save(newUser);
 				break;
 			}

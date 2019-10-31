@@ -64,7 +64,7 @@ public class ItemTableDaoSQL implements ItemTableDao {
 			ResultSet rs = ps.executeQuery();
 			List<ItemTable> itemTable = new ArrayList<ItemTable>();
 			while (rs.next()) {
-				ItemTable it = new ItemTable(rs.getInt("item_id"), rs.getString("item_name"), rs.getInt(adventurer));
+				ItemTable it = new ItemTable(rs.getInt("item_id"), rs.getString("item_name"), rs.getInt("adventurer"));
 				itemTable.add(it);
 			}
 			return itemTable;

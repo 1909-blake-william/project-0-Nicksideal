@@ -19,7 +19,9 @@ public class RemoveItemPrompt implements Prompt{
 
 		System.out.println("Select the item you wish to remove by entering its ID");
 		List<ItemTable> itemTable = itemTableDao.findByAdventurer(AuthUtil.getCurrentUser().getId());
-		System.out.println(itemTable);
+		for(ItemTable i:itemTable) {
+			System.out.println(i);
+		}
 		int itemID = scan.nextInt();
 		scan.nextLine();
 		System.out.println("Provide the reason for removing the item");

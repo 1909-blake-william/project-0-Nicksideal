@@ -21,7 +21,7 @@ public class CreateNewAccountPrompt implements Prompt {
 		
 		currencyTableDao.save(gold, silver, copper);
 		
-		return null;
+		return new CreateNewAccountPrompt();
 	}
 
 }
